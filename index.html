@@ -60,7 +60,7 @@
                 margin: 15px 0;
             }
             
-            /* --- 修改点 1: 左右排列 Total / Remaining --- */
+            /* 修改点 1: 左右排列 Total / Remaining */
             .points-container {
                 grid-column: 1 / span 2;
                 display: flex;
@@ -103,6 +103,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                position: relative;
             }
 
             /* C: Employee Info */
@@ -257,7 +258,7 @@
             color: #e74c3c;
         }
 
-        /* --- 修改点 2: Total / Point 拆成两行 --- */
+        /* 修改点 2: Total / Point 拆成两行 */
         .point-label div {
             line-height: 1.2em;
         }
@@ -307,12 +308,53 @@
             color: #333;
         }
 
+        /* 图片上传相关样式 */
+        .profile-upload-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-btn {
+            padding: 10px 15px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 2;
+            position: absolute;
+            font-size: 14px;
+        }
+
+        .edit-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+            cursor: pointer;
+            display: none;
+            z-index: 3;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            padding: 4px;
+        }
+
         @media (max-width: 768px) {
             .name { font-size: 2em; }
             .point-value { font-size: 2em; }
             .button { padding: 15px; font-size: 1em; }
             .profile-pic {
                 max-width: 100px;
+            }
+            .upload-btn {
+                padding: 8px 12px;
+                font-size: 12px;
             }
         }
 
@@ -322,6 +364,12 @@
                 max-width: 80px;
             }
             .button { padding: 12px; font-size: 0.9em; }
+            .edit-icon {
+                width: 20px;
+                height: 20px;
+                bottom: 3px;
+                right: 3px;
+            }
         }
 
         /* 修改点5: 小屏幕下的正方形适配 */
@@ -346,14 +394,17 @@
 
             <!-- Profile -->
             <div class="profile-container card">
-                <!-- 修改点6: 将这里换成你的base64图片 -->
-                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQAmgMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAAAwQFBgcBAgj/xABBEAACAQMCBAIHBAcIAQUAAAABAgMABBEFIQYSMUETURQiYXGBkaEHMkKxFSNSYoLB4TNjcpKistHwJBZDc8Lx/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAIDAQT/xAAiEQEBAAICAgEFAQAAAAAAAAAAAQIRAyExQRITIjJCUQT/2gAMAwEAAhEDEQA/ANxooorAMUYoooAxRiiigDFGKKK0Cimt9f21jHz3MoXOyqBlmPkANzVP1vj30ElYLSKMjtdzYf8AyJnH8RWst02S1eq5tWMXP2q6ysmx05Is/htXJHzkxT7TftZLNyajAI2HUrh1Px9Uj5H31m4LjWs12s+g+1XSXkCvZ3IQ9XRkbHwBq3aRrunavGr2Nwr8wyFJ3Pn78d8dK3bNJOiuA5rtaBijFFFYBijFFFAFFFFAFFFFaBRRRWAVAarxCsCSCzMZ8P8AtLiXPhxjz23Y9gB1PfY4U4lvDb2zJzcqEZkbzHZc9s77+QPnWL8VcSPfT+iW7EWsRJAG3MT+I/8AdhgVlujY47WDiLigHTZ7m1ncSSZXx5XHiNv0GPuj2DA99Zdcah4jsS0hJO5x1q26RGL/AEq6tlto5JnUqjkZcnrtnZR0/wC71Vb/AEs20pW6JEoP3c4xU5e+18p1NGKAzSl0OGXfmG1LPG5wqsR5bUoI/AGHLBvPH/NKlmC8yHK+6mTNohJCw5yUI6Mp2/pVo4Z12WyulDuUYkeuvc9sgd/I9frmEiHjYVQCW2GehzUpY6Usd+LPUCYV6hx+D/nB+lFrccdt44a1w38KxXJUT4yr9pR5+/8APqPIWAdKy3ROINMnnjihuETbogI8Nx1K+z8Q9x860mwuPSLZHbAcZWQDsw2Pwz9K3HLZM8fjTmiiimIKKKKAKKKKAQurmK1i8Sd+Vc4GxJJ8gBUVc62fGCWgVgoy3OpHMf2R5e/frUjqVmL238PIV1bmRiMgHp09xI+NQZ06/jcYtuYjoVkUj6kH6Vlt9LcWPHZble1kWRWhEoI5SvNk+VJ2t1DdwLPbSCSNujD614khxpzQDtCU+mKg7aZrfTrmOAkS3DRrFjqHaMDPwALfA0bS0pf2l8T+LElvHE0YCGYMDnxUJKof9LHH+E5rI4JJLqblXOWJ5sVpfEuivxDxTdR8y2mlWESLcXLbLFCi5IGe+7e4bn21eOO11viJxpiR2Nj6sMLN6nJCgwGJP4jud99/ZU7drTH0leF7LULiZ7TRjyFwBPdEZEY8gfP8qvXDHBmmWuL2eL0h2OY2m9YkftknqT192KkNBg0ldPXTtGuLeSBRiZonBOO/Tz6Z/nVgGAABgAdKVW30pmucKaXd62FubSNoL6NuZgMNHIuNwfIg9PZVEu9Cfg/XOe4QXFgrjnYjOFboxHs/l7a2F1FxfJIASsSlQfMkj+QqP4k0uLUpRBKnMJrWaMj2+qVPzBoZ0y/ia90rTXki020tHkmTEp5D6mfLHf8ApVbur6a7PiSyFn5QAc9MUlqFu0QaOU+tHtk+XapK04Xuorb0jX7qHRrMbiS6yXk2z6ka7tsRWyamy5W1H6bdNHNHPHs0bZ2H/e1bzwDqa3luUDZygOCckMoAP+kx/HNZVpekcM3Oi61qGn3WsMLKEuLy5jSOCWQZxGq9cnpjOd6s32X3vh6hFHkjPqkH9k7f7inypsb2ne416iuCu1RIUUUUAUUUVoFFFFAI3ciQ2k0srcqJGzMT2AG9QFtYustrcsf1iWyxvGehYDY+8ZYfH2U/12Tn9HsFGTcyZk9ka7t8zyr/ABV5L8s6rn74PzFSzq3HFK4r0ZW0WKw1DVhp2jxES39wcGW8fryjyGRnuTsANqjOHrPhbhOwkv7+8t760uiDbXckXRf2Cp6N3ztnyFevtk0rVL8aXLY21xdwRl0aKCJpGVzjDEKDtgEZqHn4auYOHJru6SdNSSxtbe09Ijx6MuAJeT94ZO/XfPSlPVx0S74P4iuRLpkdul7F6ymNPCkX5YParguy46++vn3hPT9Ufj6xuYLFrF/SxzQojLEEA9YrzMSykAknscde30HjFZZIaW2dvEvOsbeAqmTG2elVm/8A/VkdzFdQQaXdxwMWEKu8TsCMEc249vTtUxr11dWmnSSWEKST4PK0jcqR4GSzHsAAexrGZ/tI4m0y9t5pbq1uLS4XxkCgZKZxuvO3Icg7Nvjy7bJay5SOcQK/6UkY20lpPzNmGQAmN1bmG4yrDBXzFSevcZaJf2SQXWjXd5KZOdreV/D5CvT1xk4Pfl7bU61e9i4o0tdXtYWhkEoE8XKT4coGGGcdcBNu3L36mmXoVxy/dmT6/wBP6Vs/jfldde3jWtWvdY8EXbRx2sORbWVugSC3GNuVR1PtO/wqyfZ/eiPUbRycet63uA5j9VqjSStvG+QRvirBwdNi+jUd2lA+Mb4ptI+n0yK7XFOa7TpCiiigCiiigCkbq5itYWmnblRRkn/jzPsr3NLHDE8krrHGgLM7HAUDqSagYpZNTmF7MrJbpvawuME/3jDsT2HYb9TgZbqGxm6XiWSaVrq4XlkcYVCf7NfL39z/AEFIySxrdNIwklkjHKqRIW5M4Jz2BPq9cbYpW9uDbw8yKHldgkSftOeg/mfYDUNxldrw/wAM+g20hN3d8w5+53BkkPz+GRU5N9q2/HqKTxV9pl+kklto1ulsASpnkxI5x5D7oHzzVu0+2M+n2lxcZuZZrZDJJM5ctzKCcDoAfIACsLvW/wDJYkYwcYrXPst4mgv9Mi0S7ZUvLRAkAJ/tolG2Pao2I9gPnS3HcU48pje1v06wtLeQzx26LKV5ec5JA8hnp8KkBzFmyBy9t6QvrVbqxuLU7CWNkyfaMVUIE1iCEWdu1wJEHKuUBAI6etjp8aXwtjh9TdlXC/t0vLC5tZGKpPC8RPcZFZBdfZw4mQrzr4rfrFyDDGcYLgDfp8a1y0t5otPgguZ2nnSMCSVurt3NNWsmLkqxBPcGi2lwxxu9oTQ+EYYG1NzJJHBeFFSHbZURUDn944zt51muraJczzHwY2Z2d1j8OMsJOViDgDODsdvz61tbzNbxCCJkN26HwY3YDmx3x1wMjOKq16uncOWMU2uvEAi4W3JDSXDZBGB7989snpW7pdY9ysQuEcOUlT1lJGGypB/kaluHG9Gv4GckL4inJ7HcDPzFI3ri4llmZFWSSVnYDfBY5wPdnFK6O2ZeRyMg7Ejpjzqm0LO309ZTrc20cydHUH3HuKXqncNambaOBXJ9EuFJjycmMrs6E+a/Vd/wnNwHQVSJWadooooYK4Tiu1CcQSPdSx6TC7IJkMl06nBWEHHKD2LHb3Bu4FF6EmzaSX9PXORvpML+rvtduD97/wCNSNv2jv0AzIHr1ryiJGixxKFRQFVVGAAOgFNNZ1CLStLur+YEpBGXCjqx7KPaTtUbd104Y6jtgPTtblm629gPDXyMzDLH+FSB/E1Vbju5Twru7ulbk9MS1AG58NQpIH+Iu/wx5VK6Pc6zp1qlsIrK4MmZjKztFl2PM+wDZ3JwdvLFVzi3Q9W1u48OWW2sopH5wodpBzgElug7Z+G1Pr7S3DP5b0zLWU08yPNbTnMkRkMbfhct90H2DrUfa3BhdZVYqQchlOGU+Yx0NaZb/ZNbyuG1HV5WLbhbdFUHz3PN9KkF+zfhl4fAS3uOZZuUTeO3OxA39mPh2okP9PK1D8N/ahd2gFvrsLXsIwBcRACVR+8CQG+h99aBpXFmi6snPY3LSEY5gYJMrnsdtqpGu8B6UlqLi1C2cYnCTzF3cQpuA3LnpnlJPkc1cOHuErbQtPFra3DPzN4kkrKMyMfd2xjHspcppsx1dU+1DiLTNOtnubuaVIkxzN6PJgZIA35fM4qk659q1uivFodjJJINhPdjlQe0KDk/HlqycW6AL7hrUIBcBZPD8RWfZQUYOM+z1aweWGSHnFwhjlUlWRuoI6g0uPbM9T8XNa1a91TUJL2+uZJrpv8A3Ccco7BcfdA7AfzpC3ZmkV5GLN1ZmOSRSbIBu3XypVV8NMscM23uFURKly0nmC2afaeMXRYdmNMIhjGR7KltMiLyBfxOSR+Q/OlqmPlpmiXDjRWdQXdJbaaEf3niiJx8VZRj31pemhlsokYk8oKgnuAcD6YrP/s9tfTZyWB9Gs0DL+/I7Mf9IA+PurSFAVQAMAdBT4eEuT8naKKKYjlV61YTapqsrMDIk6wY7qiopAPxdz8asWKg9c0lDLJqtrO1peRwkPIBzJIg35XQ9fYdiPOsym4bC6pc9Cf61XOLleTSriSb1cr4VtEN/wBY/qBj7fWwB2952Sg4j1VLeOS70hJ+dA2bScZ3Gfuvj8zTY6i+v61Y2ptbm3W3kF1Ms8eAFT7oyCQTz8p/hNR127PjZ2nk2ltR2zIo9w//AClL6ISCNj0jLMf8pH86SuMQGyIOyycre4qR+eKdOVcMhPTr7qro6LsndboKx2tbMZ/xMc//AFp1YIVS2BG/hFz7zimung3FjfXBzm4dwvsUeqPrk/GpMEC5Ve/h/ka2NpnHA8fO0ah8+rLE3SRckZ94Hz6HsQ0t9NuLHCaJqj2Vv2srmHx4k9ibqyj2BioHQVN8o5icdaHPKueUtjsBWUlkqiccX+qR6X6K+rpmd+Rha2qxjk/FzczOfLoV3IrKb3lEecdT08q1Tj1ZHS6nuEXlt4YeVOyhnYn5mNF+NZdrVwtze+KsSxK8meRTstKlySRGxL4lwA24G5+FLvG0kn3Tygb+yu6Pbvd6iIIuXxHBChjgVY9K0mZpZrGWNluJ4C8S/tspB5feRmtTxx2Qj0eGWxtbo3kcLSrkrJ0OMZ/nSWmSLFfKnN90Bc0wuY5beUW84IKbpnoVO+1INLyz5Bxzbg0thtzbd+Ar2O30mDdVSWbkd+wxzAA/6B8avSupOAQSOoHasI4H19oZ3tpRtP8AeVvus3Tbtkj57dCARr2h6nHOqwnGexAx8/kRn2YOD1fG+ks5d7TdFFFMQU31CE3NjcQA4MkTIPiCKcVygM0sb+L9CRXly3hItury834fVGc+47e8YqX4btJEilu7uNkurshnQ9YkH3I/gDk+1mrmp8Fy/pBr3T7iOaHxjcLp12MRLITnIZd/vZYBgwBORim/6S1XTXb9JaBfQr3kt8XMZ9xT1vmopdO6c0zklSeroTDsMnBIA8xgj6im+o36xadNdwkPzwjkHmx2FI/+o9KvQYUuFWbGfCkPI496tgj5VFuhk1S103H6p7kT4/dUFsf5wvzotVk62tGnWwtNOgt8k+HGASepONzScsnLd2Mn4ZOaI+8jI/207Y7Eew1GTlpdIdkBMkDCVcdfVIbHxG3xoKl+1crzFIskaupyrDIPmK95oKrvGlnFcaLeSykrywMpP7Weg/zYx7awKR/EKA9SB+Va99pOtY02WGF8A5VSOnXDOfkVX25PYVjzoURpG2PYeXkKypct309xu0E8U8TFXU5yDuKntM1GZL+3kZ2laGQNGJGJ67EZ7ZBI+NVwttEO5Tf61I6NGbzVbSDnCh3SNmJ236/TPyoTxt20jiTQI9f0q4vo4jDPCG8NlxzPJy8wLjopIIzjv16YrKJSY2AkGVO4YbHFfRGgRrLp11OwIiu7iWSNWHRCcL88c3xrD+L9MbT+I7mwIOEmYpt+BjzL9Dj4UK8kmtkdMm9blLdPWUgfUVrfC1+12tlKCRMSVYjuQVU5+aH3oKxTT2YXMaxjLBiqj31s/wBmGnPJdQ3Ep/8AHSNzDn8bBlBYe7OKzXae/tsakK7RRVEBRRRQBXGzjau0UBTeOJZL3T2sE052eQHmeeEGNdsbNuCd8/DPbFUb7KLUvqN7dkcqQokUYydmbdvdty1s00McyFJUV0PVWGxrPtEtI47m/wBQsBJFb3Fw7BA/qMq+qDg9yFznvmlro4N2rNzfrwn7lMNJfDtGRsw/KlllDagnL0aDP1pgz+jXbnpyyn5E/wBRQ7MZvcONIc27y6bId4G/V+1DuP8Aj4GpTrt57VFarE2Y763/ALROp9nt9lOor5XtFuVRiAcSIBll89h1waC5TrbJOJXMrIrgN4aKFB6cxGc+4LgfwnvVHuP10p6+Cm5Pmf61qHHmnW7yrcaaXfxg3iYUgeeBn4/M+eDnzW/PFGmMD1i3+LfFL4c3JO0YVaRyd8tgbDPXoAPOtQ4C4HlS6W41ReRY0DtCOoJB5VJ92S38I33qv8DWtueJbNrmLxEVucKBn8LYIHfcCtnWBHn9ItpHQOAGUbBsdDitjePHfYvX5FjjXAXGcDsB0rM/tWsAurWWpRrvc2hjJ7BkOfyf/TWozxJLH+tOMfi8qo/2j27votvLlnjtbpGDhT918od/4gfhW1XOS4M80LSWLNMY+YL6oP0J+J2+NfQWk6datoWmLayOiwwq0M0JwckbnyOe4Ix8qzLgF7eyv44dUhxE6yRsHQlXVsMGHmAcZx0zk4G9ahpen6ZCSdLkIiVt0hmLR5+ZojjySkMbRrhpHkP7T4z9ABSlcAxXacgooorAKKKKAjeJLiS04f1K4gbllitZHQ+RCnFQGkQRwaJbwxDljWAAD2YoopcnX/m8UnaMf0hbj+6YfUV51hR4s+NuaPOR54NFFHp2fuf6a5lsELgHKgkdtxTSONYdTlt0yIpE9Zc98bGuUUQnuuW0UJuHiaCJlkBD8yAkjNVrW+FdKjuo3gieESFiURvVyD7aKKyiyWm2m8LabJqViB46eMsjNySEYKlcY8utXe3s1tByJLO4BxmSQsSPjRRS1OySqlxVxde6Qz+i2tkxXoZI2J/3VWtH17VOLbMTaxeOYGR5DaQgRxEo2wOPWI88k0UU88Obkt3pt1jptnBYRWqwI8a+th1By37R9tPY40iQJGioo6BRgCiimiD3RRRWh//Z" class="profile-pic" alt="Profile Picture">
+                <div class="profile-upload-container">
+                    <img src="" class="profile-pic" id="profileImg" alt="Profile Picture">
+                    <button class="upload-btn" id="uploadBtn">Upload Photo</button>
+                    <img class="edit-icon" id="editIcon" src="" alt="Edit">
+                </div>
             </div>
 
             <!-- Info -->
             <div class="info-container card">
                 <div class="name" id="employeeNameDisplay">Jessie Tew</div>
-                <div class="department">Department: Management</div>
+                <div class="department">Department: Management </div>
                 <div class="position">Position: Finance Director</div>
             </div>
 
@@ -385,14 +436,17 @@
 
                 <!-- Redeem Reward 加上 user=Jessie Tew -->
                 <button class="button"
-                    onclick="window.location.href='https://hl-steel-industries-sdn-bhd.github.io/Redeem-html-test11/?user='">
+                    onclick="window.location.href='https://hl-steel-industries-sdn-bhd.github.io/Redeem-html-test11/?user=H8C2GNPaX1DLRQtv'">
                     Redeem Reward
                 </button>
-
+                
                 <button class="button" onclick="window.open('https://hl-steel-industries-sdn-bhd.github.io/Off-Site-Work-Record/', '_blank')">Off-site Work Record</button>
                 <button class="button" onclick="submitContribution()">Submit Contribution</button>
                 <button class="button" onclick="viewSchedule()">Work Schedule</button>
-                <button class="button" onclick="submitQC()">Submit QC Report</button>
+                <button class="button"
+                    onclick="window.location.href='https://hl-steel-industries-sdn-bhd.github.io/QC-Defect-Report-Submission7/?user=Jessie Tew'">
+                    Submit QC Report
+                  </button>
                 <button class="button" onclick="viewBounty()">Bounty Task</button>
                 <button class="button"
                     onclick="window.location.href='https://hl-steel-industries-sdn-bhd.github.io/Morning-check-in/?user=Jessie Tew'">
@@ -403,18 +457,43 @@
         </div>
     </div>
 
+    <!-- Hidden elements for file upload -->
+    <input type="file" accept="image/*" id="hiddenUpload" style="display:none;">
+    <iframe id="hiddenFrame" name="hiddenFrame" style="display:none;"></iframe>
+    <form id="uploadForm" action="https://script.google.com/macros/s/AKfycbyEKA3wJ5baq5UnpPMDbXfllvuoPWZESpzLI-1z4j0MrCzkaYfsMIhvgSk_CoXDjmfN/exec" method="POST" target="hiddenFrame" style="display:none;">
+        <input type="hidden" name="action" value="saveBase64">
+        <input type="hidden" name="user" id="userField">
+        <input type="hidden" name="base64" id="base64Field">
+    </form>
+
     <script>
         const CONFIG = {
             employeeName: "Jessie Tew",
             sheetID: "1nnjHKRP5mfutcX0DCnGBzFQOw78dX5MbkknZio_hRQc",
             tabName: "Remaining Point",
-            gasURL: "https://script.google.com/macros/s/AKfycbzqsiU5z_rt7DtIZ6xfwJ72YU-m1RR3F325HH5yVLnL6hCxH046vMOvmV3-xIPJxCEdyQ/exec"  // <<--- 你部署 GAS 后记得填这里
+            gasURL: "https://script.google.com/macros/s/AKfycbzqsiU5z_rt7DtIZ6xfwJ72YU-m1RR3F325HH5yVLnL6hCxH046vMOvmV3-xIPJxCEdyQ/exec",
+            // 这里填写你部署GAS2后的URL
+            gas2URL: "https://script.google.com/macros/s/AKfycbyEKA3wJ5baq5UnpPMDbXfllvuoPWZESpzLI-1z4j0MrCzkaYfsMIhvgSk_CoXDjmfN/exec"
         };
+
+        // 图片上传相关变量
+        const uploadBtn = document.getElementById("uploadBtn");
+        const hiddenUpload = document.getElementById("hiddenUpload");
+        const profileImg = document.getElementById("profileImg");
+        const editIcon = document.getElementById("editIcon");
+        const base64Field = document.getElementById("base64Field");
+        const userField = document.getElementById("userField");
+        const uploadForm = document.getElementById("uploadForm");
 
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("employeeNameDisplay").textContent = CONFIG.employeeName;
+            userField.value = CONFIG.employeeName;
+
+            // 设置表单的action指向GAS2
+            uploadForm.action = CONFIG.gas2URL;
 
             loadPointsFromGAS();
+            loadProfileImage();
 
             setTimeout(() => {
                 document.getElementById("loading").style.display = "none";
@@ -423,7 +502,6 @@
 
         async function loadPointsFromGAS() {
             try {
-
                 const url =
                     `${CONFIG.gasURL}?name=${encodeURIComponent(CONFIG.employeeName)}`
                     + `&sheet=${CONFIG.sheetID}`
@@ -441,10 +519,98 @@
             }
         }
 
+        // 加载个人资料图片
+        async function loadProfileImage() {
+            try {
+                const url = `${CONFIG.gas2URL}?action=getBase64&user=${encodeURIComponent(CONFIG.employeeName)}`;
+                const res = await fetch(url);
+                const text = await res.text();
+
+                if (text.trim() !== "") {
+                    profileImg.src = "data:image/jpeg;base64," + text;
+                    profileImg.style.display = "block";
+                    editIcon.style.display = "block";
+                    uploadBtn.style.display = "none";
+                } else {
+                    // 如果没有图片，显示上传按钮
+                    uploadBtn.style.display = "block";
+                    profileImg.style.display = "none";
+                    editIcon.style.display = "none";
+                }
+            } catch (error) {
+                console.error("Error loading profile image:", error);
+                uploadBtn.style.display = "block";
+            }
+        }
+
+        // 点击上传按钮
+        uploadBtn.onclick = () => hiddenUpload.click();
+
+        // 用户选择照片
+        hiddenUpload.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const compressed = await compressImage(file, 700);
+            const base64 = compressed.split(",")[1];
+
+            // 显示图片
+            profileImg.src = compressed;
+            profileImg.style.display = "block";
+            editIcon.style.display = "block";
+
+            // 上传按钮隐藏
+            uploadBtn.style.display = "none";
+
+            // 设置表单数据并提交
+            userField.value = CONFIG.employeeName;
+            base64Field.value = base64;
+            uploadForm.submit();
+        };
+
+        // 压缩图片函数
+        function compressImage(file, maxWidth) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const scale = Math.min(maxWidth / img.width, 1);
+                        const canvas = document.createElement("canvas");
+                        canvas.width = img.width * scale;
+                        canvas.height = img.height * scale;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL("image/jpeg", 0.75));
+                    };
+                    img.src = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // 点击编辑图标删除图片
+        editIcon.onclick = async () => {
+            if (!confirm("Remove this profile picture?")) return;
+
+            profileImg.style.display = "none";
+            editIcon.style.display = "none";
+            uploadBtn.style.display = "block";
+
+            try {
+                await fetch(`${CONFIG.gas2URL}?action=deleteBase64&user=${encodeURIComponent(CONFIG.employeeName)}`);
+            } catch (error) {
+                console.error("Error deleting image:", error);
+            }
+        };
+
+        // 编辑图标（base64编码的笔图标）
+        editIcon.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzMzMzMzMyI+PHBhdGggZD0iTTMgMTcuMjVWMjFoMy43NUwxNy44MSA5Ljk0bC0zLjc1LTMuNzVMMyAxNy4yNXpNMjAuNzEgNy4wNGMuMzktLjM5LjM5LTEuMDIgMC0xLjQxbC0yLjM0LTIuMzRjLS4zOS0uMzktMS4wMi0uMzktMS40MSAwbC0xLjgzIDEuODMgMy43NSAzLjc1IDEuODMtMS44M3oiLz48L3N2Zz4=";
+
+        // 其他功能函数
         function viewRanking() { alert("Coming soon"); }
         function submitContribution() { alert("Coming soon"); }
         function viewSchedule() { alert("Coming soon"); }
-        function submitQC() { alert("Coming soon"); }
         function viewBounty() { alert("Coming soon"); }
     </script>
 </body>
